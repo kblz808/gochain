@@ -1,5 +1,5 @@
 build:
-	go build ./bin/gochain .
+	go build -o ./bin/gochain .
 
 run: build
 	./bin/gochain
