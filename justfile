@@ -3,3 +3,6 @@ build:
 
 run: build
 	./bin/gochain
+
+clean:
+	rm -rf ./tmp/**
