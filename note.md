@@ -1,7 +1,12 @@
-we secure our blockchain by forcing the network to do work (computational power) to add a block to the chain
+bitcoin and others use a databse called leveldb, which is a low level key value storage.
 
-miners just do this proof of work so that they can sign sign the blocks on the blockchain
+we need to consider how we want to store our blockchain data.
 
-why do they get fees?, bcs they are powering the actual network by running the proof of work algo
+in the bitcoin core specification, there are two main groups of data, we have the blocks which are stored with metada
+which describe all of the blocks on the chain and the chain state object which stores the state of a chain and all of the
+current unspent transaction outputs and as well as few pieces of metadata.
 
-the work is hard but prooving the work is an easy task
+with bitcoin, each block has its own separate file on the disk.
+
+
+we used iterators to iterate through the blockchain backwards, starting from the latest block
