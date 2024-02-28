@@ -160,21 +160,21 @@ func (iter *BlockChainIterator) Next() *Block {
 }
 
 func (chain *BlockChain) FindUnspentTransactions(address string) []Transaction {
-	var unspentTxs []Transaction
+	var unspentTxs []Transaction // store unspent transactions
 
-	spentTXOs := make(map[string][]int)
+	spentTXOs := make(map[string][]int) // spent transaction outputs
 
 	iter := chain.Iterator()
 
 	for {
 		block := iter.Next()
 
-		for _, tx := range block.Transactions {
-			txID := hex.EncodeToString(tx.ID)
+		for _, tx := range block.Transactions { // iterate over transactions of a block
+			txID := hex.EncodeToString(tx.ID) // transaction id, which is used as a key for the map
 
 			// for each transaction, we iterate through outputs inside the transaction
 		Outputs:
-			for outIdx, out := range tx.Outputs {
+			for outIdx, out := range tx.Outputs { // iterate over outputs of the transaction
 				if spentTXOs[txID] != nil {
 					for _, spentOut := range spentTXOs[txID] {
 						if spentOut == outIdx {
@@ -187,7 +187,7 @@ func (chain *BlockChain) FindUnspentTransactions(address string) []Transaction {
 				}
 			}
 
-			if tx.IsCoinbase() == false {
+			if tx.IsCoinbase() == false { // proceing the inputs of transaction and updating the spentTXOs
 				for _, in := range tx.Inputs {
 					if in.CanUnlock(address) {
 						inTxID := hex.EncodeToString(in.ID)
